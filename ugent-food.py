@@ -1,9 +1,10 @@
 import json
 import urllib2
+import datetime
+import sys
+
 
 __author__ = 'thepieterdc'
-
-from datetime import date
 
 def getMenu(weekNo,todayForm):
     url = "http://zeus.ugent.be/hydra/api/1.0/resto/week/%d.json" %weekNo
@@ -17,9 +18,43 @@ def getMenu(weekNo,todayForm):
 
 def main():
 
-    weekNumber = date.today().isocalendar()[1]
-    todayFormatted  = date.today().strftime('%Y-%m-%d')
-    menu = getMenu(weekNumber,todayFormatted)
+    if len(sys.argv) == 2:
+        argument = sys.argv[1]
+
+        if argument == 'morgen':
+            day = datetime.date.today() + datetime.timedelta(days=1)
+        elif argument == 'overmorgen':
+            day = datetime.date.today() + datetime.timedelta(days=2)
+        elif argument == 'maandag':
+            day = datetime.date.today()
+            while day.weekday() != 0:
+                day += datetime.timedelta(1)
+        elif argument == 'dinsdag':
+            day = datetime.date.today()
+            while day.weekday() != 1:
+                day += datetime.timedelta(1)
+        elif argument == 'woensdag':
+            day = datetime.date.today()
+            while day.weekday() != 2:
+                day += datetime.timedelta(1)
+        elif argument == 'donderdag':
+            day = datetime.date.today()
+            while day.weekday() != 3:
+                day += datetime.timedelta(1)
+        elif argument == 'vrijdag':
+            day = datetime.date.today()
+            while day.weekday() != 4:
+                day += datetime.timedelta(1)
+        else:
+            day = datetime.date.today()
+    else:
+        day = datetime.date.today()
+
+    weekNumber = day.isocalendar()[1]
+    todayFormatted = day.strftime('%Y-%m-%d')
+    menu = getMenu(weekNumber, todayFormatted)
+
+    print "==================[%s]====================" %day
 
     print "==================[SOEP]=================="
     print dict(menu)["soup"]["name"]
