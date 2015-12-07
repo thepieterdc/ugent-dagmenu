@@ -64,6 +64,7 @@ def main():
     print dict(menu)["meat"][1]["name"]
     print dict(menu)["meat"][2]["name"]
     print dict(menu)["meat"][3]["name"]
+    print dict(menu)["meat"][4]["name"]
 
     print "==================[GROENTEN]=================="
     print dict(menu)["vegetables"][0]
