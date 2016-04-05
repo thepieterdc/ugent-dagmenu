@@ -1,74 +1,47 @@
 import json
-import urllib2
 import datetime
 import sys
+import urllib.request
 
 
-__author__ = 'thepieterdc'
+def getmenu(d: datetime) -> dict:
+    """
+    Gets the menu for a given date.
+    :param d: the date
+    :return: the menu for a given date
+    """
+    jsonData = json.loads(urllib.request.urlopen(
+        "http://zeus.ugent.be/hydra/api/1.0/resto/week/{}.json".format(d.isocalendar()[1])).read().decode('utf-8'))
 
-def getMenu(weekNo,todayForm):
-    url = "http://zeus.ugent.be/hydra/api/1.0/resto/week/%d.json" %weekNo
-    response = urllib2.urlopen(url)
-    jsonData = json.load(response)
+    if str(d) in jsonData:
+        return jsonData[str(d)]
+    exit("Restaurant gesloten.")
 
-    if dict.has_key(jsonData, todayForm):
-        return dict.get(jsonData, todayForm)
-    else:
-        print 'Restaurant gesloten'
 
-def main():
+def printmenu(d: datetime):
+    """
+    Prints the menu for a given date.
+    :param d: the date
+    """
+    menu = getmenu(d)
+    print("{}[{}]{}".format("=" * 19, d, "=" * 19))
+    print("{}[ SOEP ]{}".format("=" * 21, "=" * 21))
+    print("* {}".format(menu["soup"]["name"]))
+    print("{}[ HOOFDGERECHTEN ]{}".format("=" * 16, "=" * 16))
+    [print("* {}".format(g["name"])) for g in menu["meat"]]
+    print("{}[ GROENTEN ]{}".format("=" * 21, "=" * 21))
+    [print("* {}".format(v)) for v in menu["vegetables"]]
 
-    if len(sys.argv) == 2:
-        argument = sys.argv[1]
 
-        if argument == 'morgen':
-            day = datetime.date.today() + datetime.timedelta(days=1)
-        elif argument == 'overmorgen':
-            day = datetime.date.today() + datetime.timedelta(days=2)
-        elif argument == 'maandag':
-            day = datetime.date.today()
-            while day.weekday() != 0:
-                day += datetime.timedelta(1)
-        elif argument == 'dinsdag':
-            day = datetime.date.today()
-            while day.weekday() != 1:
-                day += datetime.timedelta(1)
-        elif argument == 'woensdag':
-            day = datetime.date.today()
-            while day.weekday() != 2:
-                day += datetime.timedelta(1)
-        elif argument == 'donderdag':
-            day = datetime.date.today()
-            while day.weekday() != 3:
-                day += datetime.timedelta(1)
-        elif argument == 'vrijdag':
-            day = datetime.date.today()
-            while day.weekday() != 4:
-                day += datetime.timedelta(1)
-        else:
-            day = datetime.date.today()
-    else:
-        day = datetime.date.today()
+if len(sys.argv) == 2:
+    o = str(sys.argv[1])
 
-    weekNumber = day.isocalendar()[1]
-    todayFormatted = day.strftime('%Y-%m-%d')
-    menu = getMenu(weekNumber, todayFormatted)
+    day = datetime.date.today() + datetime.timedelta(1 if o == 'morgen' else 2 if o == 'overmorgen' else 0)
 
-    print "==================[%s]====================" %day
+    if o[0:2] in ['ma', 'di', 'wo', 'do', 'vr']:
+        while day.weekday() != ['ma', 'di', 'wo', 'do', 'vr'].index(o[0:2]):
+            day += datetime.timedelta(1)
+else:
+    day = datetime.date.today()
 
-    print "==================[SOEP]=================="
-    print dict(menu)["soup"]["name"]
-
-    print "==================[GERECHTEN]=================="
-    print dict(menu)["meat"][0]["name"]
-    print dict(menu)["meat"][1]["name"]
-    print dict(menu)["meat"][2]["name"]
-    print dict(menu)["meat"][3]["name"]
-    print dict(menu)["meat"][4]["name"]
-
-    print "==================[GROENTEN]=================="
-    print dict(menu)["vegetables"][0]
-    print dict(menu)["vegetables"][1]
-
-if __name__ == '__main__':
-    main()
+printmenu(day)
