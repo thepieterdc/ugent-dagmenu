@@ -1,1 +1,1 @@
-python ugent-food.py "$@"
+python3 ugent-food.py "$@"
