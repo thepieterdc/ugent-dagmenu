@@ -32,16 +32,14 @@ def printmenu(d: datetime):
     print("{}[ GROENTEN ]{}".format("=" * 21, "=" * 21))
     [print("* {}".format(v)) for v in menu["vegetables"]]
 
-
+day = datetime.date.today()
 if len(sys.argv) == 2:
     o = str(sys.argv[1])
 
-    day = datetime.date.today() + datetime.timedelta(1 if o == 'morgen' else 2 if o == 'overmorgen' else 0)
+    day += datetime.timedelta(1 if o == 'morgen' else 2 if o == 'overmorgen' else 0)
 
     if o[0:2] in ['ma', 'di', 'wo', 'do', 'vr']:
         while day.weekday() != ['ma', 'di', 'wo', 'do', 'vr'].index(o[0:2]):
             day += datetime.timedelta(1)
-else:
-    day = datetime.date.today()
 
 printmenu(day)
