@@ -5,12 +5,16 @@ import datetime
 import sys
 import urllib.request
 
+weekdagen = ('ma', 'di', 'wo', 'do', 'vr')
+deltas = {'morgen': 1,
+          'overmorgen': 2}
+
 d = datetime.date.today()
 if len(sys.argv) == 2:
-    d += datetime.timedelta(1 if sys.argv[1] == 'morgen' else 2 if sys.argv[1] == 'overmorgen' else 0)
+    d += datetime.timedelta(deltas.get(sys.argv[1], 0))
 
-    if sys.argv[1][0:2] in ['ma', 'di', 'wo', 'do', 'vr']:
-        while d.weekday() != ['ma', 'di', 'wo', 'do', 'vr'].index(sys.argv[1][0:2]):
+    if sys.argv[1][0:2] in weekdagen:
+        while d.weekday() != weekdagen.index(sys.argv[1][0:2]):
             d += datetime.timedelta(1)
 
 menu = json.loads(urllib.request.urlopen(
