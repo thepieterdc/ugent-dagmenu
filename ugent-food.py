@@ -8,7 +8,7 @@ import urllib.request
 def header(text, fillchar='-', width=40):
     tofill = max(width - 4 - len(text), 0)
     leftpad = tofill // 2
-    
+
     print('{}[ {} ]{}'.format(
         fillchar * leftpad,
         text,
@@ -44,7 +44,9 @@ header('SOEP')
 print("* {}".format(today["soup"]["name"]))
 
 header('HOOFDGERECHTEN')
-[print("* {}".format(g["name"])) for g in today["meat"]]
+for g in today["meat"]:
+    print("* {}".format(g["name"]))
 
 header('GROENTEN')
-[print("* {}".format(v)) for v in today["vegetables"]]
+for v in today["vegetables"]:
+    print("* {}".format(v))
