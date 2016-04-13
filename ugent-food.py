@@ -37,17 +37,26 @@ try:
         "http://zeus.ugent.be/hydra/api/2.0/resto/menu/nl/{}/{}/{}.json".format(d.year, d.month, d.day)).read().decode(
         'utf-8'))
     # Print menu
+    print(menu)
+
     header(str(d), fillchar='=')
 
     header('SOEP')
-    print("* {}".format(today["soup"]["name"]))
+    for s in menu["meals"]:
+        if s["kind"] == "soup":
+            print("* {}".format(s["name"]))
 
     header('HOOFDGERECHTEN')
-    for g in today["meat"]:
-        print("* {}".format(g["name"]))
+    for m in menu["meals"]:
+        if m["kind"] == "meat":
+            print("* Vlees: {}".format(m["name"]))
+        elif m["kind"] == "fish":
+            print("* Vis: {}".format(m["name"]))
+        elif m["kind"] == "vegetarian":
+            print("* Vegetarisch: {}".format(m["name"]))
 
     header('GROENTEN')
-    for v in today["vegetables"]:
+    for v in menu["vegetables"]:
         print("* {}".format(v))
 except HTTPError:
     exit("Restaurant gesloten")
