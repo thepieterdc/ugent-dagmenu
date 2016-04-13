@@ -45,9 +45,7 @@ header('SOEP')
 print("* {}".format(today["soup"]["name"]))
 
 header('HOOFDGERECHTEN')
-for g in today["meat"]:
-    print("* {}".format(g["name"]))
+[print("* {}".format(g["name"])) for g in today["meat"]]
 
 header('GROENTEN')
-for v in today["vegetables"]:
-    print("* {}".format(v))
+[print("* {}".format(v)) for v in today["vegetables"]]
