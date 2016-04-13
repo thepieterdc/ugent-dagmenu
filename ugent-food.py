@@ -7,13 +7,12 @@ import urllib.request
 
 def header(text, fillchar='-', width=40):
     tofill = max(width - 4 - len(text), 0)
-    tofill1 = tofill // 2
-    tofill2 = tofill1 + (1 if tofill % 2 else 0)
+    leftpad = tofill // 2
     
     print('{}[ {} ]{}'.format(
-        fillchar * tofill1,
+        fillchar * leftpad,
         text,
-        fillchar * tofill2,
+        fillchar * (tofill - leftpad),
     ))
 
 # What day
