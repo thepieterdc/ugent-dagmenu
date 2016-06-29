@@ -37,8 +37,6 @@ try:
         "http://zeus.ugent.be/hydra/api/2.0/resto/menu/nl/{}/{}/{}.json".format(d.year, d.month, d.day)).read().decode(
         'utf-8'))
     # Print menu
-    print(menu)
-
     header(str(d), fillchar='=')
 
     header('SOEP')
