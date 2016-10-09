@@ -21,14 +21,20 @@ def header(text, fillchar='-', width=40):
 # What day
 weekdagen = ('ma', 'di', 'wo', 'do', 'vr')
 deltas = {'morgen': 1,
-          'overmorgen': 2}
+          'overmorgen': 2,
+          'volgende': 7}
 
 d = datetime.date.today()
-if len(sys.argv) == 2:
-    d += datetime.timedelta(deltas.get(sys.argv[1], 0))
 
-    if sys.argv[1][0:2] in weekdagen:
-        while d.weekday() != weekdagen.index(sys.argv[1][0:2]):
+sys.argv.pop(0)
+
+if sys.argv:
+    if sys.argv[0] in deltas:
+        d += datetime.timedelta(deltas[sys.argv[0]])
+        sys.argv.pop(0)
+
+    if sys.argv and sys.argv[0][0:2] in weekdagen:
+        while d.weekday() != weekdagen.index(sys.argv[0][0:2]):
             d += datetime.timedelta(1)
 
 # Fetch from API
