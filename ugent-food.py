@@ -19,7 +19,7 @@ def header(text, fillchar='-', width=40):
 
 
 # What day
-weekdagen = ('ma', 'di', 'wo', 'do', 'vr')
+weekdagen = ('ma', 'di', 'wo', 'do', 'vr', 'za', 'zo')
 deltas = {'morgen': 1,
           'overmorgen': 2,
           'volgende': 7}
