@@ -2,8 +2,8 @@
 
 import json
 import datetime
+import requests
 import sys
-import urllib.request
 from urllib.error import HTTPError
 
 
@@ -39,9 +39,7 @@ if sys.argv:
 
 # Fetch from API
 try:
-    menu = json.loads(urllib.request.urlopen(
-        "http://zeus.ugent.be/hydra/api/2.0/resto/menu/nl/{}/{}/{}.json".format(d.year, d.month, d.day)).read().decode(
-        'utf-8'))
+    menu = requests.get("http://zeus.ugent.be/hydra/api/2.0/resto/menu/nl/{}/{}/{}.json".format(d.year, d.month, d.day)).json()
     # Print menu
     header(str(d), fillchar='=')
 
