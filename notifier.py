@@ -14,7 +14,6 @@ d = datetime.date.today()
 # Fetch from API
 try:
     menu = requests.get("http://zeus.ugent.be/hydra/api/2.0/resto/menu/nl/{}/{}/{}.json".format(d.year, d.month, d.day)).json()
-    print(menu)
 
     soups = set()
     mains = set()
