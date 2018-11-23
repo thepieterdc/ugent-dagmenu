@@ -1,11 +1,9 @@
 #!/usr/bin/env python3
 
-import json
 import datetime
-import os
+import sys
 
 import requests
-import sys
 from urllib.error import HTTPError
 
 
