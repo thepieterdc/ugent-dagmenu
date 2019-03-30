@@ -1,7 +1,6 @@
 #!/usr/bin/env python3
 
 import datetime
-import sys
 
 import requests
 from urllib.error import HTTPError
