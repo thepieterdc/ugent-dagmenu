@@ -55,6 +55,8 @@ try:
             print("* Vis: {}".format(m["name"]))
         elif m["kind"] == "vegetarian":
             print("* Vegetarisch: {}".format(m["name"]))
+        elif m["kind"] == "vegan":
+            print("* Vegan: {}".format(m["name"]))
 
     header('GROENTEN')
     for v in menu["vegetables"]:
