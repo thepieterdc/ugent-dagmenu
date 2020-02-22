@@ -3,6 +3,7 @@
 import datetime
 import requests
 import sys
+from simplejson.errors import JSONDecodeError
 from urllib.error import HTTPError
 
 
@@ -38,7 +39,7 @@ if sys.argv:
 
 # Fetch from API
 try:
-    menu = requests.get("http://zeus.ugent.be/hydra/api/2.0/resto/menu/nl/{}/{}/{}.json".format(d.year, d.month, d.day)).json()
+    menu = requests.get("https://zeus.ugent.be/hydra/api/2.0/resto/menu/nl/{}/{}/{}.json".format(d.year, d.month, d.day)).json()
     # Print menu
     header(str(d), fillchar='=')
 
@@ -61,5 +62,5 @@ try:
     header('GROENTEN')
     for v in menu["vegetables"]:
         print("* {}".format(v))
-except HTTPError:
+except (JSONDecodeError, HTTPError):
     exit("Restaurant gesloten")
