@@ -3,8 +3,6 @@
 import datetime
 import requests
 import sys
-from simplejson.errors import JSONDecodeError
-from urllib.error import HTTPError
 
 
 def header(text, fillchar='-', width=40):
@@ -62,5 +60,5 @@ try:
     header('GROENTEN')
     for v in menu["vegetables"]:
         print("* {}".format(v))
-except (JSONDecodeError, HTTPError):
+except Exception:
     exit("Restaurant gesloten")
